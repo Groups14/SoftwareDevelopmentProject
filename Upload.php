@@ -11,7 +11,7 @@
 		echo"unable to connect to database";
 	}
 	else {
-			echo"your code has been saved into the database";
+			echo"you are connected\n";
 	}
 	
 	//@mysqli_select_db($database) or die( "Unable to select database");
@@ -38,13 +38,22 @@
 			echo $DeadlineToClaim;
 			echo $DeadlineToSubmit;*/
 			/*INSERT INTO task_profile */
-			$query = INSERT INTO `task_profile`(`Task_ID`, `user_ID`, `Task_title`, `task_type`,`brief_description`,`page_count`, `word_count`, `claim_deadline`, `completion_deadline`, `time_created`, `task_description`, `file_Format`)
-			VALUES (,15170756,$TaskTitle,$TaskType,$BriefDescription,[value-6],[value-7],[value-8],[value-9],[value-10])
+			//$query = "INSERT INTO `task_profile`(`Task_ID`, `user_ID`, `Task_title`, `page_count`, `word_count`, `claim_deadline`, `completion_deadline`, `time_created`, `task_description`, `file_Format`)
+			//VALUES (,15170756,$TaskTitle,$NoOfPages,$NoOfWords,$DeadlineToClaim,$DeadlineToSubmit,,$BriefDescription,2)";
 			
 			
 			/*(user_ID, Task_title, page_count, word_count, claim_deadline, completion_deadline, time_created, task_description, file_Format);
 			Values ('$TaskTitle', '$TaskType', '$BriefDescription', '$Tags', '$NoOfPages', '$NoOfWords', '$DeadlineToClaim', '$DeadlineToSubmit');*/
-			mysqli_query($conn,"INSERT INTO `task_tags`(`task_ID`, `tag_ID`) VALUES (1,2)");
+			//mysqli_query($conn,"INSERT INTO `task_tags`(`task_ID`, `tag_ID`) VALUES (2,3)");
+			$query =  mysqli_query($conn,"INSERT INTO `task_profile` (`Task_ID`, `user_ID`, `Task_title`, `page_count`, `word_count`, `claim_deadline`, `completion_deadline`, `time_created`, `task_description`, `file_Format`)
+			VALUES (NULL, '15170756', '$TaskTitle', '$NoOfPages', '$NoOfWords', '$DeadlineToClaim', '$DeadlineToSubmit', CURRENT_TIMESTAMP, '$BriefDescription', '2');");
+			if($query) {
+				echo "Added to database";
+			}
+			else {
+				echo "Not Added to database";
+			}
+				
 		}
 		else {
 	?>
@@ -61,12 +70,12 @@
 			
 			<label for="TaskType">Task Type</label>
 			<select name = "taskType">
-					<option value="MScThesis">MSc thesis</option>
-					<option value="BScDissertation">BSc dissertation</option>
-					<option value="projectReport">project report</option>
-					<option value="PhDThesis">PhD thesis</option>
-					<option value="Assignment">Assignment</option>
-					<option value="ConferenceResearchPaper">Conference Research Paper</option>
+					<option name="MScThesis"value="1">MSc thesis</option>
+					<option name="BScDissertation" value="2">BSc dissertation</option>
+					<option name="projectReport"value="3">project report</option>
+					<option name="PhDThesis"value="4">PhD thesis</option>
+					<option name="Assignment"value="5">Assignment</option>
+					<option name="ConferenceResearchPaper"value="6">Conference Research Paper</option>
 			</select><br>
 			
 			<label for="BriefDescription">Brief Description</label>
@@ -75,24 +84,23 @@
 			<label for="Tags">Tags</label>
 			<select name = "Tags">
 					<option value="Computer">Computer</option>
-					<option value="HTML">HTML</option>
+					<option value="HTML">HTML</option
 					<option value="project-report">project-report</option>
 					<option value="cs4014">cs4014</option>
 			</select><br>
 			
 			<label for="NoOfPages">No Of Pages</label>
-			<input type="text" name="NoOfPages"  value="" style="width: 100px">
+			<input type="number" name="NoOfPages"  value="" style="width: 100px">
 			
 			<label for="NoOfWords"> No Of Words</label>
-			<input type="text" name="NoOfWords"  value="" style="width: 100px"></br>
+			<input type="number" name="NoOfWords"  value="" style="width: 100px"></br>
 			
 			<label for="SourceFileFormat">Source File Format</label><br>
-			<input type="radio" name="docx" value="docx" checked>.docx
-			<input type="radio" name="doc" value="doc">.doc
-			<input type="radio" name="open office" value="open office">.open office</br>
-			<input type="radio" name="tex" value="tex">.tex
-			<input type="radio" name="pdf" value="pdf">.pdf<br>
-			<input type="submit" value="open"><br>
+			<input type="radio" name="fileFormat" value="1" >.docx
+			<input type="radio" name="fileFormat" value="2">.doc
+			<input type="radio" name="fileFormat" value="3">.open office</br>
+			<input type="radio" name="fileFormat" value="4">.tex
+			<input type="radio" name="fileFormat" value="5">.pdf<br>
 			
 			<label for="DeadlineToClaim">Deadline to Claim</label>
 			<input type="date" name="claimDate">
@@ -101,7 +109,7 @@
 			<input type="date" name="submitDate"><br>
 			
 			<input type="submit" value="CreateTask">
-			<input type="reset">
+			<input type="reset"><br>
 			
 			<input type="file" id="myFileInput" />
 			<input type="button"
